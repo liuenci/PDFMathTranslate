@@ -521,9 +521,7 @@ with gr.Blocks(
     css=custom_css,
     head=demo_recaptcha if flag_demo else "",
 ) as demo:
-    gr.Markdown(
-        "# [PDFMathTranslate @ GitHub](https://github.com/Byaidu/PDFMathTranslate)"
-    )
+
 
     with gr.Row():
         with gr.Column(scale=1):
