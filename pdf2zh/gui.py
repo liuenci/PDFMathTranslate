@@ -254,18 +254,13 @@ def translate_file(
     output = Path("pdf2zh_files")
     output.mkdir(parents=True, exist_ok=True)
 
-    if file_type == "File":
-        if not file_input:
-            raise gr.Error("No input")
-        file_path = shutil.copy(file_input, output)
-    else:
-        if not link_input:
-            raise gr.Error("No input")
-        file_path = download_with_limit(
-            link_input,
-            output,
-            5 * 1024 * 1024 if flag_demo else None,
-        )
+    if not link_input:
+        raise gr.Error("No input")
+    file_path = download_with_limit(
+        link_input,
+        output,
+        5 * 1024 * 1024 if flag_demo else None,
+    )
 
     filename = os.path.splitext(os.path.basename(file_path))[0]
     file_raw = output / f"{filename}.pdf"
@@ -534,11 +529,12 @@ with gr.Blocks(
 
     with gr.Row():
         with gr.Column(scale=1):
-            gr.Markdown("## File | < 5 MB" if flag_demo else "## File")
+            gr.Markdown("## Link")
             file_type = gr.Radio(
-                choices=["File", "Link"],
+                choices=["Link"],
                 label="Type",
-                value="File",
+                value="Link",
+                visible=False,
             )
             file_input = gr.File(
                 label="File",
@@ -546,10 +542,11 @@ with gr.Blocks(
                 file_types=[".pdf"],
                 type="filepath",
                 elem_classes=["input-file"],
+                visible=False,
             )
             link_input = gr.Textbox(
                 label="Link",
-                visible=False,
+                visible=True,
                 interactive=True,
             )
             gr.Markdown("## Option")
@@ -642,11 +639,7 @@ with gr.Blocks(
                 _envs[-1] = gr.update(visible=translator.CustomPrompt)
                 return _envs
 
-            def on_select_filetype(file_type):
-                return (
-                    gr.update(visible=file_type == "File"),
-                    gr.update(visible=file_type == "Link"),
-                )
+
 
             def on_select_page(choice):
                 if choice == "Others":
@@ -682,52 +675,13 @@ with gr.Blocks(
                 envs,
             )
             vfont.change(on_vfont_change, inputs=vfont, outputs=None)
-            file_type.select(
-                on_select_filetype,
-                file_type,
-                [file_input, link_input],
-                js=(
-                    f"""
-                    (a,b)=>{{
-                        try{{
-                            grecaptcha.render('recaptcha-box',{{
-                                'sitekey':'{client_key}',
-                                'callback':'onVerify'
-                            }});
-                        }}catch(error){{}}
-                        return [a];
-                    }}
-                    """
-                    if flag_demo
-                    else ""
-                ),
-            )
+
 
         with gr.Column(scale=2):
             gr.Markdown("## Preview")
             preview = PDF(label="Document Preview", visible=True, height=2000)
 
     # Event handlers
-    file_input.upload(
-        lambda x: x,
-        inputs=file_input,
-        outputs=preview,
-        js=(
-            f"""
-            (a,b)=>{{
-                try{{
-                    grecaptcha.render('recaptcha-box',{{
-                        'sitekey':'{client_key}',
-                        'callback':'onVerify'
-                    }});
-                }}catch(error){{}}
-                return [a];
-            }}
-            """
-            if flag_demo
-            else ""
-        ),
-    )
 
     state = gr.State({"session_id": None})
 
