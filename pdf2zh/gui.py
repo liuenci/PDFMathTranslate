@@ -508,6 +508,55 @@ demo_recaptcha = """
     </script>
     """
 
+seo_head_tags = """
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online PDF translator preserving mathematical formulas and document formatting. Supports multiple languages and translation services including Google, OpenAI, DeepL and more.">
+    <meta name="keywords" content="PDF translator, document translation, math formula translation, academic paper translation, multilingual PDF, online PDF tool, scientific document translation">
+    <meta name="author" content="PDFMathTranslate">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PDFMathTranslate - Free PDF Translation Tool">
+    <meta property="og:description" content="Translate PDF documents while preserving mathematical formulas and formatting. Support for academic papers, research documents, and technical literature.">
+    <meta property="og:site_name" content="PDFMathTranslate">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="PDFMathTranslate - Free PDF Translation Tool">
+    <meta property="twitter:description" content="Translate PDF documents while preserving mathematical formulas and formatting.">
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#a8b5c8">
+    <meta name="application-name" content="PDFMathTranslate">
+    <link rel="canonical" href="#">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDFMathTranslate",
+        "description": "Free online PDF translator that preserves mathematical formulas and document formatting",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "PDF Translation",
+            "Mathematical Formula Preservation",
+            "Multiple Language Support",
+            "Document Formatting Preservation"
+        ]
+    }
+    </script>
+    """
+
 tech_details_string = ""
 cancellation_event_map = {}
 
@@ -802,9 +851,12 @@ def setup_gui(
     Outputs:
         - None
     """
+    # Force English interface
+    i18n = gr.I18n(en={})
+    
     user_list, html = parse_user_passwd(auth_file)
     if flag_demo:
-        demo.launch(server_name="0.0.0.0", max_file_size="5mb", inbrowser=True)
+        demo.launch(server_name="0.0.0.0", max_file_size="5mb", inbrowser=True, i18n=i18n)
     else:
         if len(user_list) == 0:
             try:
@@ -814,6 +866,7 @@ def setup_gui(
                     inbrowser=True,
                     share=share,
                     server_port=server_port,
+                    i18n=i18n,
                 )
             except Exception:
                 print(
@@ -826,13 +879,14 @@ def setup_gui(
                         inbrowser=True,
                         share=share,
                         server_port=server_port,
+                        i18n=i18n,
                     )
                 except Exception:
                     print(
                         "Error launching GUI using 127.0.0.1.\nThis may be caused by global mode of proxy software."
                     )
                     demo.launch(
-                        debug=True, inbrowser=True, share=True, server_port=server_port
+                        debug=True, inbrowser=True, share=True, server_port=server_port, i18n=i18n
                     )
         else:
             try:
@@ -844,6 +898,7 @@ def setup_gui(
                     auth=user_list,
                     auth_message=html,
                     server_port=server_port,
+                    i18n=i18n,
                 )
             except Exception:
                 print(
@@ -858,6 +913,7 @@ def setup_gui(
                         auth=user_list,
                         auth_message=html,
                         server_port=server_port,
+                        i18n=i18n,
                     )
                 except Exception:
                     print(
@@ -870,6 +926,7 @@ def setup_gui(
                         auth=user_list,
                         auth_message=html,
                         server_port=server_port,
+                        i18n=i18n,
                     )
 
 
