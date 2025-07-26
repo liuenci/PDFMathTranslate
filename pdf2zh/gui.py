@@ -820,7 +820,7 @@ def setup_gui(
     
     user_list, html = parse_user_passwd(auth_file)
     if flag_demo:
-        demo.launch(server_name="0.0.0.0", max_file_size="5mb", inbrowser=True, i18n=i18n, root_path="/app")
+        demo.launch(server_name="0.0.0.0", max_file_size="5mb", inbrowser=True, i18n=i18n)
     else:
         if len(user_list) == 0:
             try:
@@ -831,7 +831,6 @@ def setup_gui(
                     share=share,
                     server_port=server_port,
                     i18n=i18n,
-                    root_path="/app",
                 )
             except Exception:
                 print(
@@ -845,14 +844,13 @@ def setup_gui(
                         share=share,
                         server_port=server_port,
                         i18n=i18n,
-                        root_path="/app",
                     )
                 except Exception:
                     print(
                         "Error launching GUI using 127.0.0.1.\nThis may be caused by global mode of proxy software."
                     )
                     demo.launch(
-                        debug=True, inbrowser=True, share=True, server_port=server_port, i18n=i18n, root_path="/app"
+                        debug=True, inbrowser=True, share=True, server_port=server_port, i18n=i18n
                     )
         else:
             try:
