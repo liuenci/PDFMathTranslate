@@ -815,17 +815,39 @@ def setup_gui(
     Outputs:
         - None
     """
+    import os
+    
     # Force English interface
     i18n = gr.I18n(en={})
     
+    # 检测是否为线上环境
+    is_production = (
+        os.getenv('VERCEL') == '1' or  # Vercel环境
+        os.getenv('RAILWAY_ENVIRONMENT') == 'production' or  # Railway环境
+        os.getenv('RENDER') == 'true' or  # Render环境
+        os.getenv('PRODUCTION') == 'true' or  # 通用生产环境标识
+        os.getenv('NODE_ENV') == 'production'  # Node.js生产环境
+    )
+    
+    # 根据环境设置server_name
+    # 线上环境使用None让Gradio自动检测正确的主机名
+    # 本地环境保持原有逻辑
+    production_server_name = None if is_production else "0.0.0.0"
+    production_fallback_server_name = None if is_production else "127.0.0.1"
+    
     user_list, html = parse_user_passwd(auth_file)
     if flag_demo:
-        demo.launch(server_name="0.0.0.0", max_file_size="5mb", inbrowser=True, i18n=i18n)
+        demo.launch(
+            server_name=production_server_name, 
+            max_file_size="5mb", 
+            inbrowser=True, 
+            i18n=i18n
+        )
     else:
         if len(user_list) == 0:
             try:
                 demo.launch(
-                    server_name="0.0.0.0",
+                    server_name=production_server_name,
                     debug=True,
                     inbrowser=True,
                     share=share,
@@ -834,11 +856,11 @@ def setup_gui(
                 )
             except Exception:
                 print(
-                    "Error launching GUI using 0.0.0.0.\nThis may be caused by global mode of proxy software."
+                    "Error launching GUI using primary server name.\nThis may be caused by global mode of proxy software."
                 )
                 try:
                     demo.launch(
-                        server_name="127.0.0.1",
+                        server_name=production_fallback_server_name,
                         debug=True,
                         inbrowser=True,
                         share=share,
@@ -847,7 +869,7 @@ def setup_gui(
                     )
                 except Exception:
                     print(
-                        "Error launching GUI using 127.0.0.1.\nThis may be caused by global mode of proxy software."
+                        "Error launching GUI using fallback server name.\nThis may be caused by global mode of proxy software."
                     )
                     demo.launch(
                         debug=True, inbrowser=True, share=True, server_port=server_port, i18n=i18n
@@ -855,7 +877,7 @@ def setup_gui(
         else:
             try:
                 demo.launch(
-                    server_name="0.0.0.0",
+                    server_name=production_server_name,
                     debug=True,
                     inbrowser=True,
                     share=share,
@@ -866,11 +888,11 @@ def setup_gui(
                 )
             except Exception:
                 print(
-                    "Error launching GUI using 0.0.0.0.\nThis may be caused by global mode of proxy software."
+                    "Error launching GUI using primary server name.\nThis may be caused by global mode of proxy software."
                 )
                 try:
                     demo.launch(
-                        server_name="127.0.0.1",
+                        server_name=production_fallback_server_name,
                         debug=True,
                         inbrowser=True,
                         share=share,
@@ -881,7 +903,7 @@ def setup_gui(
                     )
                 except Exception:
                     print(
-                        "Error launching GUI using 127.0.0.1.\nThis may be caused by global mode of proxy software."
+                        "Error launching GUI using fallback server name.\nThis may be caused by global mode of proxy software."
                     )
                     demo.launch(
                         debug=True,
