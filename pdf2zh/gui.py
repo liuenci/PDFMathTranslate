@@ -832,8 +832,8 @@ def setup_gui(
     # 根据环境设置server_name
     # 线上环境使用None让Gradio自动检测正确的主机名
     # 本地环境保持原有逻辑
-    production_server_name = "https://pdf2en.com"
-    production_fallback_server_name = "https://pdf2en.com"
+    production_server_name = None
+    production_fallback_server_name = None
     
     user_list, html = parse_user_passwd(auth_file)
     if flag_demo:
