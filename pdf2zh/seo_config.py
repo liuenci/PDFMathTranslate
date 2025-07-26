@@ -100,12 +100,28 @@ class SEOConfig:
         """获取完整的head内容，合并SEO标签和现有内容"""
         meta_tags = self.get_meta_tags(lang)
         structured_data = self.get_structured_data(lang)
+        google_analytics = self.get_google_analytics()
         
         return f"""
 {meta_tags}
 {structured_data}
+{google_analytics}
 {existing_head}
         """
+    
+    def get_google_analytics(self) -> str:
+        """获取Google Analytics代码"""
+        return '''
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1HDXD6PGS9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-1HDXD6PGS9');
+    </script>
+        '''
     
     def get_seo_title(self, lang: str = "en") -> str:
         """获取SEO优化的页面标题"""
