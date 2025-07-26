@@ -497,33 +497,7 @@ custom_css = """
         width: 100%;
     }
 
-    .seo-description {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        color: white !important;
-        padding: 2rem !important;
-        border-radius: 12px !important;
-        margin-bottom: 2rem !important;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
-    }
 
-    .seo-description h1 {
-        color: white !important;
-        margin-bottom: 1rem !important;
-        font-size: 2rem !important;
-    }
-
-    .seo-description p {
-        color: rgba(255,255,255,0.9) !important;
-        line-height: 1.6 !important;
-    }
-
-    .seo-description ul {
-        color: rgba(255,255,255,0.9) !important;
-    }
-
-    .seo-description li {
-        margin-bottom: 0.5rem !important;
-    }
     """
 
 demo_recaptcha = """
@@ -560,24 +534,7 @@ with gr.Blocks(
     css=custom_css,
     head=comprehensive_head_content,
 ) as demo:
-    # SEO优化的描述性内容
-    gr.Markdown(
-        """
-        # 🔬 PDFMathTranslate - AI-Powered PDF Translation Tool
-        
-        **Preserve mathematical formulas, layouts, and formatting while translating PDF documents.**
-        
-        ✨ **Key Features:**
-        - 🧮 **Mathematical Formula Preservation** - Keep equations intact during translation
-        - 📐 **Layout Integrity** - Maintain original document structure and formatting
-        - 🌐 **Multi-Language Support** - Translate between multiple languages
-        - 🚀 **AI-Powered Translation** - Advanced translation services for accurate results
-        - 📄 **Batch Processing** - Handle multiple documents efficiently
-        
-        Perfect for academic papers, research documents, technical manuals, and any PDF containing mathematical content.
-        """,
-        elem_classes=["seo-description"]
-    )
+
     
     with gr.Row():
         with gr.Column(scale=1):

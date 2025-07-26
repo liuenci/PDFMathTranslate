@@ -11,19 +11,20 @@ class SEOConfig:
     
     def __init__(self):
         self.default_keywords = [
+            "PDF to English", "convert PDF to English", "English translation", "academic translation",
             "PDF translation", "math formula", "AI translator", "online PDF translator",
             "preserve formatting", "mathematical equations", "document translation",
-            "PDF翻译", "数学公式", "在线翻译工具", "格式保持", "文档翻译"
+            "PDF转英文", "英文翻译", "文档转换", "PDF翻译", "数学公式", "在线翻译工具", "格式保持", "文档翻译"
         ]
         
         self.descriptions = {
-            "en": "AI-powered PDF translation tool that preserves mathematical formulas, layouts, and formatting. Translate PDF documents while maintaining document structure integrity.",
-            "zh": "AI驱动的PDF翻译工具，保持数学公式、布局和格式。在保持文档结构完整性的同时翻译PDF文档。"
+            "en": "Professional PDF to English translation service preserving mathematical formulas and document formatting. Convert academic papers and technical documents to English with AI precision.",
+            "zh": "专业的PDF转英文翻译服务，保持数学公式和文档格式。使用AI精准转换学术论文和技术文档为英文。"
         }
         
         self.titles = {
-            "en": "PDFMathTranslate - AI PDF Translation Tool | Math Formula Preservation | Free Online PDF Translator",
-            "zh": "PDFMathTranslate - AI PDF翻译工具 | 数学公式保持 | 免费在线PDF翻译器"
+            "en": "PDF to English Converter - Professional Document Translation | Math Formula Preservation",
+            "zh": "PDF转英文工具 - 专业文档翻译 | 数学公式保持"
         }
     
     def get_meta_tags(self, lang: str = "en") -> str:
@@ -38,7 +39,7 @@ class SEOConfig:
     <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <meta name="author" content="PDFMathTranslate Team">
+    <meta name="author" content="PDF to English Converter Team">
     <meta name="language" content="{lang}">
     
     <!-- Open Graph Tags -->
@@ -46,7 +47,7 @@ class SEOConfig:
     <meta property="og:description" content="{description}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pdf2zh.com">
-    <meta property="og:site_name" content="PDFMathTranslate">
+    <meta property="og:site_name" content="PDF to English Converter">
     <meta property="og:locale" content="{'en_US' if lang == 'en' else 'zh_CN'}">
     
     <!-- Twitter Card Tags -->
@@ -56,7 +57,7 @@ class SEOConfig:
     
     <!-- Additional SEO Tags -->
     <meta name="theme-color" content="#2563eb">
-    <meta name="application-name" content="PDFMathTranslate">
+    <meta name="application-name" content="PDF to English Converter">
     <link rel="canonical" href="https://pdf2zh.com">
         '''
     
@@ -70,7 +71,7 @@ class SEOConfig:
     {{
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "PDFMathTranslate",
+        "name": "PDF to English Converter",
         "description": "{description}",
         "url": "https://pdf2zh.com",
         "applicationCategory": "Productivity",
@@ -79,15 +80,16 @@ class SEOConfig:
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD"
-        }},
+        }}
         "creator": {{
             "@type": "Organization",
-            "name": "PDFMathTranslate Team"
-        }},
+            "name": "PDF to English Converter Team"
+        }}
         "featureList": [
+            "Convert PDF to English",
             "Preserve mathematical equations",
             "Maintain document formatting",
-            "Multiple translation services",
+            "Academic document translation",
             "Batch processing"
         ]
     }}
