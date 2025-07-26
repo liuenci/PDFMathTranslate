@@ -18,6 +18,7 @@ from pdf2zh import __version__
 from pdf2zh.high_level import translate
 from pdf2zh.doclayout import ModelInstance
 from pdf2zh.config import ConfigManager
+from pdf2zh.seo_config import SEOConfig
 from pdf2zh.translator import (
     AnythingLLMTranslator,
     AzureOpenAITranslator,
@@ -495,6 +496,34 @@ custom_css = """
     .pdf-canvas canvas {
         width: 100%;
     }
+
+    .seo-description {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        padding: 2rem !important;
+        border-radius: 12px !important;
+        margin-bottom: 2rem !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    }
+
+    .seo-description h1 {
+        color: white !important;
+        margin-bottom: 1rem !important;
+        font-size: 2rem !important;
+    }
+
+    .seo-description p {
+        color: rgba(255,255,255,0.9) !important;
+        line-height: 1.6 !important;
+    }
+
+    .seo-description ul {
+        color: rgba(255,255,255,0.9) !important;
+    }
+
+    .seo-description li {
+        margin-bottom: 0.5rem !important;
+    }
     """
 
 demo_recaptcha = """
@@ -508,54 +537,15 @@ demo_recaptcha = """
     </script>
     """
 
-seo_head_tags = """
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online PDF translator preserving mathematical formulas and document formatting. Supports multiple languages and translation services including Google, OpenAI, DeepL and more.">
-    <meta name="keywords" content="PDF translator, document translation, math formula translation, academic paper translation, multilingual PDF, online PDF tool, scientific document translation">
-    <meta name="author" content="PDFMathTranslate">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="en">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="PDFMathTranslate - Free PDF Translation Tool">
-    <meta property="og:description" content="Translate PDF documents while preserving mathematical formulas and formatting. Support for academic papers, research documents, and technical literature.">
-    <meta property="og:site_name" content="PDFMathTranslate">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="PDFMathTranslate - Free PDF Translation Tool">
-    <meta property="twitter:description" content="Translate PDF documents while preserving mathematical formulas and formatting.">
-    
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#a8b5c8">
-    <meta name="application-name" content="PDFMathTranslate">
-    <link rel="canonical" href="#">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "PDFMathTranslate",
-        "description": "Free online PDF translator that preserves mathematical formulas and document formatting",
-        "applicationCategory": "ProductivityApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "featureList": [
-            "PDF Translation",
-            "Mathematical Formula Preservation",
-            "Multiple Language Support",
-            "Document Formatting Preservation"
-        ]
-    }
-    </script>
-    """
+# 初始化SEO配置
+seo_config = SEOConfig()
+
+# 生成SEO优化的标题和head内容
+seo_title = seo_config.get_seo_title("en")
+comprehensive_head_content = seo_config.get_comprehensive_head_content(
+    existing_head=demo_recaptcha if flag_demo else "",
+    lang="en"
+)
 
 tech_details_string = ""
 cancellation_event_map = {}
@@ -563,15 +553,32 @@ cancellation_event_map = {}
 
 # The following code creates the GUI
 with gr.Blocks(
-    title="PDFMathTranslate - PDF Translation with preserved formats",
+    title=seo_title,
     theme=gr.themes.Default(
         primary_hue=custom_blue, spacing_size="md", radius_size="lg"
     ),
     css=custom_css,
-    head=demo_recaptcha if flag_demo else "",
+    head=comprehensive_head_content,
 ) as demo:
-
-
+    # SEO优化的描述性内容
+    gr.Markdown(
+        """
+        # 🔬 PDFMathTranslate - AI-Powered PDF Translation Tool
+        
+        **Preserve mathematical formulas, layouts, and formatting while translating PDF documents.**
+        
+        ✨ **Key Features:**
+        - 🧮 **Mathematical Formula Preservation** - Keep equations intact during translation
+        - 📐 **Layout Integrity** - Maintain original document structure and formatting
+        - 🌐 **Multi-Language Support** - Translate between multiple languages
+        - 🚀 **AI-Powered Translation** - Advanced translation services for accurate results
+        - 📄 **Batch Processing** - Handle multiple documents efficiently
+        
+        Perfect for academic papers, research documents, technical manuals, and any PDF containing mathematical content.
+        """,
+        elem_classes=["seo-description"]
+    )
+    
     with gr.Row():
         with gr.Column(scale=1):
             gr.Markdown("## File | < 5 MB" if flag_demo else "## File")
