@@ -1,0 +1,32 @@
+# Robots.txt for PDF to English Converter
+# https://pdf2zh.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# 允许访问主要页面
+Allow: /
+
+# 禁止访问敏感目录和文件
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /.vercel/
+Disallow: /test/
+Disallow: /script/
+Disallow: /__pycache__/
+Disallow: /*.pyc
+Disallow: /*.log
+Disallow: /Dockerfile*
+Disallow: /docker-compose.yml
+Disallow: /.dockerignore
+Disallow: /.gitignore
+Disallow: /.pre-commit-config.yaml
+Disallow: /pyproject.toml
+Disallow: /setup.cfg
+Disallow: /app.json
+
+# 站点地图位置
+Sitemap: https://pdf2zh.com/sitemap.xml
+
+# 爬取延迟（可选，对服务器友好）
+Crawl-delay: 1
