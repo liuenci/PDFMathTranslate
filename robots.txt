@@ -4,10 +4,10 @@
 User-agent: *
 Allow: /
 
-# 允许访问主要页面
+# Allow access to main pages
 Allow: /
 
-# 禁止访问敏感目录和文件
+# Disallow access to sensitive directories and files
 Disallow: /.git/
 Disallow: /.github/
 Disallow: /.vercel/
@@ -25,8 +25,8 @@ Disallow: /pyproject.toml
 Disallow: /setup.cfg
 Disallow: /app.json
 
-# 站点地图位置
+# Sitemap location
 Sitemap: https://pdf2zh.com/sitemap.xml
 
-# 爬取延迟（可选，对服务器友好）
+# Crawl delay (optional, server-friendly)
 Crawl-delay: 1
